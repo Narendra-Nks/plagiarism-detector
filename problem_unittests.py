@@ -148,6 +148,4 @@ def test_data_split(train_x, train_y, test_x, test_y):
         'train_y should be a 1D array, got shape: {}'.format(train_y.shape)
     
     _print_success_message()
-    
-    
         

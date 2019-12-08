@@ -5,13 +5,11 @@ import os
 import pandas as pd
 
 from sklearn.externals import joblib
-
-## TODO: Import any additional libraries you need to define a model
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import make_scorer, fbeta_score
 
-# Provided model load function
+
 def model_fn(model_dir):
     """Load model from the model_dir. This is the same model that is saved
     in the main if statement.
@@ -25,9 +23,7 @@ def model_fn(model_dir):
     return model
 
 
-## TODO: Complete the main code
 if __name__ == '__main__':
-    
     # All of the model parameters and training parameters are sent as arguments
     # when this script is executed, during a training job
     
@@ -51,11 +47,7 @@ if __name__ == '__main__':
     train_y = train_data.iloc[:,0]
     train_x = train_data.iloc[:,1:]
     
-    
-    ## --- Your code here --- ##
-    
-
-    ## TODO: Define a model 
+    ## Define a model 
     clf = RandomForestClassifier(random_state=333)
     parameters = {"max_depth": [3, None],
                   "n_estimators": list(range(10, 200, 30)),
@@ -64,17 +56,13 @@ if __name__ == '__main__':
     scorer = make_scorer(fbeta_score, beta=0.5)
     grid_obj = GridSearchCV(clf, parameters, scoring=scorer)
     
-    ## TODO: Train the model
+    ## Train the model
     grid_fit = grid_obj.fit(train_x, train_y)
     
     print("Optimal parameters\n------")
     print(grid_fit.best_params_)
     
     best_clf = grid_fit.best_estimator_
-    
-    
-    ## --- End of your code  --- ##
-    
 
     # Save the trained model
     joblib.dump(best_clf, os.path.join(args.model_dir, "model.joblib"))
